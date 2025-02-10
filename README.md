@@ -1,71 +1,123 @@
-# Getting Started with Create React App
+<p align='center'>
+  <a href='https://unico.io'>
+    <img width='350' src='https://unico.io/wp-content/uploads/2024/05/idcloud-horizontal-color.svg'></img>
+  </a>
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1 align='center'>SDK Iframe</h1>
 
-## Available Scripts
+<div align='center'>
+  
+  ### POC de implementação do SDK IDpay CBU em React
+  
+  <img width='350' src='https://quintagroup.com/cms/js/js-image/react.js-logo.png/@@images/a9bf22bd-373a-4fae-a900-c22fd12c87c7.png'></img>
+</div>
 
-In the project directory, you can run:
+## 💻 Compatibilidade
 
-### `npm start`
+### Versões mínimas
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- React 16
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Dispositivos compatíveis
 
-### `npm test`
+- Você pode conferior os aparelhos testados em nossos laboratórios <a href='https://devcenter.unico.io/idcloud/integracao/integracao-by-unico/visao-geral#dispositivos-compativeis'>nesta</a> lista de dispositivos.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+## ✨ Como começar
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Para utilizar o by Unico por meio do SDK do by Unico, o primeiro passo é cadastrar os domínios que serão utilizados como host para exibir o iFrame da jornada do usuário no by Unico.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Sinalize o responsável pelo seu projeto de integração ou o time de suporte da Unico para realizar essa configuração.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Para começar a usar o SDK, é necessário realizar a instalação do SDK Web da Unico. Vale destacar que o "by Unico" utiliza o mesmo SDK empregado no IDPay.:
 
-### `npm run eject`
+$ npm install idpay-b2b-sdk@0.0.27 ou no caso dessa POC apenas o npm install
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Para conseguir executa-la é necessario ter uma conta de servico na Unico e um ambiente de testes cadastrado pelo seu gerente de projetos para que voce consiga criar um processo, após isso ao criar um processo voce irá recebe um ID de processo e um Token no response.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Com essas informacoes voce deve passar dentro dos métodos Init e Open conforme abaixo e depois executar o npm start para iniciar a POC.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Feito isso deve criar no botao de Init para iniciar a autenticacao e depois no Open para abrir o processo e inciar o fluxo By Unico.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## ✨ Metodos disponiveis
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+init(options)
+Esse método inicializa o SDK, fazendo um pré-carregamento de assets, criando a experiência mais fluida para o usuário final. Nesse momento é preciso enviar o token recebido como resultado do CreateProcess.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<strong>Parâmetros:</strong>
 
-### Code Splitting
+options - é um objeto com as seguintes propriedades de configuração:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+<strong>type</strong>
 
-### Analyzing the Bundle Size
+### O tipo de fluxo que será inicializado. No by Unico utilizamos a opção "IFRAME".
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<strong>token</strong>
 
-### Making a Progressive Web App
+### Recebe o token do processo criado. Esse token é importante para conseguirmos autenticar a jornada e garantir que somente domínios autorizados utilizem-na (pode ser obtido na criação do processo via API).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```javascript
+import { IDPaySDK } from “idpay-b2b-sdk”;
 
-### Advanced Configuration
+IDPaySDK.init({
+  type: 'IFRAME',
+  env: 'uat'// Só irá ser preenchido se for ambiente de testes.
+  token,
+});
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+<strong>open(options)</strong>
+### Esse método realiza a abertura da experiência do by Unico. Para o fluxo do tipo IFRAME, essa função exibe o iframe já pré-carregado, e inicia o fluxo de mensageria entre a página do cliente e a experiência do by Unico.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Parâmetros:
 
-### `npm run build` fails to minify
+<strong>options</strong> - é um objeto com propriedades de configuração:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# unico-cbu-poc-react
+<strong>processId</strong>
+
+### Recebe o ID do processo criado. Esse ID é importante para conseguirmos obter os detalhes do processo e realizarmos todo o fluxo da maneira correta (pode ser obtido na criação do processo via API).
+
+<strong>token</strong>
+
+### Recebe o token do processo criado. Esse token é importante para conseguirmos autenticar a jornada e garantir que somente domínios autorizados utilizem-na (pode ser obtido na criação do processo via API).
+
+<strong>onFinish(process)</strong>
+
+### Recebe uma função de callback que será executada no término da jornada do by Unico, passando como argumento o objeto do processo com os seguintes dados: { captureConcluded, concluded, id }
+
+```javascript
+const processId = '9bc22bac-1e64-49a5-94d6-9e4f8ec9a1bf';
+```
+
+```javascript
+const process = {
+  id: '9bc22bac-1e64-49a5-94d6-9e4f8ec9a1bf',
+  concluded: true,
+  captureConcluded: true
+};
+```
+
+```javascript
+const onFinishCallback = process => {
+  console.log('Process', process);
+}
+```
+
+```javascript
+IDPaySDK.open({
+  transactionId: processId,
+  token: token,
+  onFinish: onFinishCallback
+});
+```
+
+---
+
+## ✨ Link da nossa documentacao: 
+
+https://devcenter.unico.io/idcloud/integracao/integracao-by-unico/controlando-a-experiencia/sdk#como-comecar
+
