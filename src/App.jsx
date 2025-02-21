@@ -1,4 +1,4 @@
-import { IDPaySDK } from 'idpay-b2b-sdk';
+import { UnicoSDK } from 'idpay-b2b-sdk';
 import { useCallback, useState } from 'react';
 
 const SDKIntegration = () => {
@@ -14,15 +14,13 @@ const SDKIntegration = () => {
     setToken(evt.target.value);
   };
 
-  const init = () => {
-    IDPaySDK.init({
-      type: 'IFRAME',
+  const initIframe = () => {
+    UnicoSDK.init({
       env: 'uat',
       token,
     });
     // setInitialized(true);
   };
-
 
   const onFinish = useCallback(
     (transaction) => console.log('>>>>>> onFinish', transaction),
@@ -30,7 +28,7 @@ const SDKIntegration = () => {
   );
 
   const open = () => {
-    IDPaySDK.open({
+    UnicoSDK.open({
       transactionId,
       token,
       onFinish,
@@ -38,7 +36,7 @@ const SDKIntegration = () => {
   };
 
   const close = () => {
-    IDPaySDK.close();
+    UnicoSDK.close();
   };
 
   return (
@@ -50,39 +48,38 @@ const SDKIntegration = () => {
         flexDirection: 'column',
       }}
     >
-      <div> 
-        <input class='box'
+      <div>
+        <h1>Unico Poc CBU React</h1>
+        <input
           onChange={handleChangeTransactionId}
           placeholder="ID da transação"
           type="text"
           value={transactionId}
         />
-        <input class='box'
+        <input
           onChange={handleChangeToken}
           placeholder="Token"
           type="text"
           value={token}
-          /> 
-{/*           
-          {initialized ? ( 
-            <span>Inicializado</span>
-          ) : (  */}
-
-            <>
-            <button data-testid="init" class='init' onClick={init}>
+        />
+        {/* {initialized ? (
+          <span>Inicializado</span>
+        ) : ( */}
+          <>
+            <button data-testid="init" class="init" onClick={initIframe}>
               Iniciar
             </button>
           </>
-              {/* )}  */}
-        <button data-testid="open" class='open' onClick={open}>
+        {/* )} */}
+        <button data-testid="open" onClick={open}>
           Abrir
         </button>
-        <button data-testid="close" class='close' onClick={close}>
+        <button data-testid="close" onClick={close}>
           Fechar
         </button>
       </div>
       <hr />
-      <div id="unico_iframe" class='iframe' style={{ height: '100%', width: '100%' }}> 
+      <div id="unico_iframe" class="iframe" >
         <div id="unico_iframe_embedded"></div>
       </div>
     </div>
