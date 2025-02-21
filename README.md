@@ -31,8 +31,9 @@ Para utilizar o by Unico por meio do SDK do by Unico, o primeiro passo é cadast
 Sinalize o responsável pelo seu projeto de integração ou o time de suporte da Unico para realizar essa configuração.
 
 Para começar a usar o SDK, é necessário realizar a instalação do SDK Web da Unico. Vale destacar que o "by Unico" utiliza o mesmo SDK empregado no IDPay.:
-
-$ npm install idpay-b2b-sdk@0.0.27 ou no caso dessa POC apenas o npm install
+```javascript
+$ npm install idpay-b2b-sdk ou no caso dessa POC apenas o npm install
+```
 
 Para conseguir executa-la é necessario ter uma conta de servico na Unico e um ambiente de testes cadastrado pelo seu gerente de projetos para que voce consiga criar um processo, após isso ao criar um processo voce irá recebe um ID de processo e um Token no response.
 
