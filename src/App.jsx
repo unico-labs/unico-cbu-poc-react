@@ -1,10 +1,10 @@
-import { UnicoSDK } from 'idpay-b2b-sdk';
-import { useCallback, useState } from 'react';
+import { ByUnicoSDK } from "idpay-b2b-sdk";
+import { useCallback, useState } from "react";
 
 const SDKIntegration = () => {
   // const [initialized, setInitialized] = useState();
-  const [transactionId, setTransactionId] = useState('');
-  const [token, setToken] = useState('');
+  const [transactionId, setTransactionId] = useState("");
+  const [token, setToken] = useState("");
 
   const handleChangeTransactionId = (evt) => {
     setTransactionId(evt.target.value);
@@ -15,20 +15,20 @@ const SDKIntegration = () => {
   };
 
   const initIframe = () => {
-    UnicoSDK.init({
-      env: 'uat',
+    ByUnicoSDK.init({
+      env: "uat",
       token,
     });
     // setInitialized(true);
   };
 
   const onFinish = useCallback(
-    (transaction) => console.log('>>>>>> onFinish', transaction),
+    (transaction) => console.log(">>>>>> onFinish", transaction),
     []
   );
 
   const open = () => {
-    UnicoSDK.open({
+    ByUnicoSDK.open({
       transactionId,
       token,
       onFinish,
@@ -36,16 +36,16 @@ const SDKIntegration = () => {
   };
 
   const close = () => {
-    UnicoSDK.close();
+    ByUnicoSDK.close();
   };
 
   return (
     <div
       style={{
-        height: '99%',
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
+        height: "99%",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <div>
@@ -65,11 +65,11 @@ const SDKIntegration = () => {
         {/* {initialized ? (
           <span>Inicializado</span>
         ) : ( */}
-          <>
-            <button data-testid="init" class="init" onClick={initIframe}>
-              Iniciar
-            </button>
-          </>
+        <>
+          <button data-testid="init" className="init" onClick={initIframe}>
+            Iniciar
+          </button>
+        </>
         {/* )} */}
         <button data-testid="open" onClick={open}>
           Abrir
@@ -79,7 +79,7 @@ const SDKIntegration = () => {
         </button>
       </div>
       <hr />
-      <div id="unico_iframe" class="iframe" >
+      <div id="unico_iframe" className="iframe">
         <div id="unico_iframe_embedded"></div>
       </div>
     </div>
