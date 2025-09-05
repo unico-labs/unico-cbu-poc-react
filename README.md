@@ -1,6 +1,6 @@
 <div align="center">
   <img src="./src/assets/logo-home.svg" alt="Unico Logo" width="200"/>
-  <h1>CBU PoC - Client Testing Application</h1>
+  <h1>Unico SDK By Unico - React</h1>
   <p><em>Proof of Concept for testing Unico SDK integration in different display modes</em></p>
 </div>
 
