@@ -368,7 +368,7 @@ body {
 #unico_iframe_embedded {
   width: 100%;
   height: 100%;
-  border: none;
+  position:absolute
 }
 
 /* Placeholder Content */
