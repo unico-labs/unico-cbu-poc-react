@@ -34,18 +34,15 @@ function FullscreenTest({ onBack }) {
 
   const openFullscreen = () => {
     console.log("*** OPENING SDK in FULLSCREEN ***");
-    
+
     // First activate fullscreen mode
     setIsFullscreen(true);
-    
-    // Wait a bit for CSS to be applied before opening
-    setTimeout(() => {
-      ByUnicoSDK.open({
-        transactionId,
-        token,
-        onFinish,
-      });
-    }, 100);
+
+    ByUnicoSDK.open({
+      transactionId,
+      token,
+      onFinish,
+    });
   };
 
   // No escape key functionality in fullscreen - let the flow complete naturally

@@ -11,6 +11,7 @@ function ModalTest({ onBack }) {
   const [sdkInitialized, setSdkInitialized] = useState(false);
 
   const unicoIframeRef = useRef(null);
+  const hasInitializedForCurrentModal = useRef(false);
 
   const closeByUnicoSDKSession = useCallback(() => {
     // Only try to close if SDK was initialized
@@ -48,6 +49,7 @@ function ModalTest({ onBack }) {
     setShowModal(false);
     closeByUnicoSDKSession();
     setIframeKey((prevKey) => prevKey + 1);
+    hasInitializedForCurrentModal.current = false; // Reset flag
   }, [closeByUnicoSDKSession]);
 
   const onFinishSdk = useCallback((result) => {
@@ -64,9 +66,9 @@ function ModalTest({ onBack }) {
       return;
     }
 
-    const startInitialization = () => {
+    const startInitialization = async () => {
       console.log("*** STARTING ByUnicoSDK... ***");
-      ByUnicoSDK.init({
+      await ByUnicoSDK.init({
         type: "IFRAME",
         env: "uat",
         token,
@@ -76,15 +78,13 @@ function ModalTest({ onBack }) {
       // Mark as initialized
       setSdkInitialized(true);
 
-      // 2. Delay ByUnicoSDK.open call for 0.5 seconds (500ms)
-      setTimeout(() => {
-        console.log("*** OPENING ByUnicoSDK after 0.5s delay... ***");
-        ByUnicoSDK.open({
-          transactionId,
-          token,
-          onFinish: onFinishSdk,
-        });
-      }, 500);
+      // Open immediately after init resolves (replacing setTimeout)
+      console.log("*** OPENING ByUnicoSDK after init... ***");
+      ByUnicoSDK.open({
+        transactionId,
+        token,
+        onFinish: onFinishSdk,
+      });
     };
 
     // 1. Only close previous session if it was already initialized
@@ -117,10 +117,11 @@ function ModalTest({ onBack }) {
   // useEffect to orchestrate SDK initialization/opening
   // This useEffect will only trigger when modal is visible AND iframe ref is available
   useEffect(() => {
-    if (showModal && unicoIframeRef.current) {
+    if (showModal && unicoIframeRef.current && !hasInitializedForCurrentModal.current) {
       console.log(
         "Modal is visible and iframe ref is ready. Attempting to initialize and open SDK."
       );
+      hasInitializedForCurrentModal.current = true;
       initializeAndOpenByUnicoSDK();
     } else if (!showModal && unicoIframeRef.current) {
       console.log("Modal closed, iframe ref might still exist briefly.");
